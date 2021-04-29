@@ -323,6 +323,7 @@ class Layout extends CI_Controller
 
     public function resendotp()
 	{
+        $meta['EmailSetup'] = $this->identity_model->get_email_setup();
 		$q=$this->db->where(['customer_id'=>$this->session->userdata('id')])
                  ->get('tbl_customer');
                 $email=$q->row()->customer_email;
@@ -331,18 +332,18 @@ class Layout extends CI_Controller
 			
 				$otp=rand(100000,999999);
 				$config = Array(
-					'protocol' => 'smtp',
-					'smtp_host' => 'smtp.hostinger.in',
-					'smtp_port' => 587,
-					'smtp_user' => 'noreply@astrostarmagik.com',
-					'smtp_pass' => 'Astro@987',
-					'mailtype' => 'html',
-					'charset' => 'iso-8859-1',
-					'wordwrap' => TRUE
+					'protocol' => $meta['EmailSetup']->protocol,
+					'smtp_host' => $meta['EmailSetup']->smtp_host,
+					'smtp_port' => $meta['EmailSetup']->smtp_port,
+					'smtp_user' => $meta['EmailSetup']->smtp_user,
+					'smtp_pass' => $meta['EmailSetup']->smtp_pass,
+					'mailtype' => $meta['EmailSetup']->mailtype,
+					'charset' => $meta['EmailSetup']->charset,
+					'wordwrap' => $meta['EmailSetup']->wordwrap
 				 );
 				$this->load->library('email', $config);
 				$this->email->set_newline("\r\n");
-				$this->email->from('noreply@astrostarmagik.com', "Astro Moderation Team");
+				$this->email->from($meta['EmailSetup']->email_from, "Astro Moderation Team");
 				$this->email->to($email);  
 				$this->email->subject("New Registration at AstroStarMagik");
 				$this->email->message('<h3>Dear,</h3><br>'.'User'.'<br>Your New One Time Password: '.$otp.'<br>Click <a style="color: red" href="http://astrostarmagik.com/verify-email">here</a> to set password<br><h3>Thanks & Regards,<br>Moderation Team</h3>');

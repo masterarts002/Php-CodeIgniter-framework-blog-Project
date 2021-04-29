@@ -170,19 +170,19 @@ class Layout_Model extends CI_Model
       {
              $config = Array(
                  'protocol' => 'smtp',
-                 'smtp_host' => 'smtp.hostinger.in',
+                 'smtp_host' => 'smtp.hosting.in',
                  'smtp_port' => 587,
-                 'smtp_user' => 'noreply@astrostarmagik.com',
-                 'smtp_pass' => 'Astro@987',
+                 'smtp_user' => 'admin@example.com',
+                 'smtp_pass' => '*****',
                  'mailtype' => 'html',
                  'charset' => 'iso-8859-1',
                  'wordwrap' => TRUE
               );
              $this->load->library('email', $config);
              $this->email->set_newline("\r\n");
-             $this->email->from('noreply@astrostarmagik.com', "Astro Moderation Team");
+             $this->email->from('noreply@example.com', "Astro Moderation Team");
              $this->email->to($customer_email);  
-             $this->email->subject("Forgot password AstroStarMagik");
+             $this->email->subject("Forgot password MasterArts");
              $this->email->message('<h3>Dear,</h3><br>'.'User'.'<br>Your OTP for forgot Password: '.$otp.'<br>Click <a style="color: red" href="http://astrostarmagik.com/set-new-password">here</a> to set password<br><h3>Thanks & Regards,<br>Moderation Team</h3>');
              $this->email->send();
              $this->db->set(['email_verification_code'=>$otp])
