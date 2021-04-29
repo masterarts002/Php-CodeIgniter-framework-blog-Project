@@ -28,16 +28,4 @@ In this case it will be http://localhost/blog</p>
 <p>Please feel free to ping me at https://masterarts.net/contact-us</p>
 <h2>Demo</h2>
 <p>https://masterarts.net</p>
-<h2>snapshot</h2>
-![alt text](https://github.com/masterarts002/Php-CodeIgniter-framework-blog-Project/blob/master/uploads/1.png?raw=true)
-![alt text](https://github.com/masterarts002/Php-CodeIgniter-framework-blog-Project/blob/master/uploads/2.png?raw=true)
-![alt text](https://github.com/masterarts002/Php-CodeIgniter-framework-blog-Project/blob/master/uploads/3.png?raw=true)
-![alt text](https://github.com/masterarts002/Php-CodeIgniter-framework-blog-Project/blob/master/uploads/4.png?raw=true)
-![alt text](https://github.com/masterarts002/Php-CodeIgniter-framework-blog-Project/blob/master/uploads/5.png?raw=true)
-![alt text](https://github.com/masterarts002/Php-CodeIgniter-framework-blog-Project/blob/master/uploads/6.png?raw=true)
-![alt text](https://github.com/masterarts002/Php-CodeIgniter-framework-blog-Project/blob/master/uploads/7.png?raw=true)
-![alt text](https://github.com/masterarts002/Php-CodeIgniter-framework-blog-Project/blob/master/uploads/8.png?raw=true)
-![alt text](https://github.com/masterarts002/Php-CodeIgniter-framework-blog-Project/blob/master/uploads/9.png?raw=true)
-![alt text](https://github.com/masterarts002/Php-CodeIgniter-framework-blog-Project/blob/master/uploads/10.png?raw=true)
-![alt text](https://github.com/masterarts002/Php-CodeIgniter-framework-blog-Project/blob/master/uploads/11.png?raw=true)
-![alt text](https://github.com/masterarts002/Php-CodeIgniter-framework-blog-Project/blob/master/uploads/12.png?raw=true)
+
