@@ -63,12 +63,7 @@ $route['published/category/(:num)']   = 'category/published_category/$1';
 $route['unpublished/category/(:num)'] = 'category/unpublished_category/$1';
 
 //menu  Route List
-$route['manage/menu']               = 'menu/index';
-$route['delete/menu/(:num)']      = 'menu/delete_menu/$1';
-$route['edit/menu/(:num)']        = 'menu/edit_menu/$1';
-$route['update/menu/(:num)']      = 'menu/update_menu/$1';
-$route['published/menu/(:num)']   = 'menu/published_menu/$1';
-$route['unpublished/menu/(:num)'] = 'menu/unpublished_menu/$1';
+
 
 //_footer menu  Route List
 $route['add-footer-menu']                 = 'dashboard/add_footer_menu';

@@ -102,7 +102,7 @@
                             <li><a href="<?php echo base_url('manage/category')?>"><i class="icon-edit"></i><span class="hidden-tablet"> Manage Category</span></a></li>
                             <li><a href="<?php echo base_url('manage/menu')?>"><i class="icon-edit"></i><span class="hidden-tablet"> Manage Menu</span></a></li>
                             <li><a href="<?php echo base_url('add-footer-menu')?>"><i class="icon-list-alt"></i><span class="hidden-tablet"> Add Footer Link</span></a></li>
-                            <li><a href="<?php echo base_url('manage-footer/menu')?>"><i class="icon-edit"></i><span class="hidden-tablet"> Manage Footer Link</span></a></li>
+                            <li><a href="<?php echo base_url('manage-footer-menu')?>"><i class="icon-edit"></i><span class="hidden-tablet"> Manage Footer Link</span></a></li>
                             <li><a href="<?php echo base_url('add/post')?>"><i class="icon-list-alt"></i><span class="hidden-tablet"> Add Post</span></a></li>
                             <li><a href="<?php echo base_url('manage/post')?>"><i class="icon-edit"></i><span class="hidden-tablet"> Manage Post</span></a></li>
                             <li><a href="<?php echo base_url('site-identity')?>"><i class="icon-star"></i><span class="hidden-tablet"> Side Identity</span></a></li>

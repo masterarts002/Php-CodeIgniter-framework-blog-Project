@@ -1,4 +1,5 @@
 <h2>PHP-CodeIgniter-Blog-project</h2><hr>
+<p>Demo: https://masterarts.net</p>
 <p>Features:</p>
 <li>Mobile Responsive Blog</li>
 <li>Creat And Manage Categories/Post</li>
@@ -18,7 +19,9 @@ In this case it will be http://localhost/blog</p>
 <h2>Database</h2>
 <p>Create Database named - 'masterarts'. Or As you wish <br>
     Use the file database.sql to import it into the database which you just created. <br>
-    after import update database.php in projec>>application>>Config folder
+    after import update database.php in projec>>application>>Config folder <br>
+    Hindi and smilies not supprorted? print like "??????" Run thi Sql Quarry <br>
+    ALTER TABLE `post_table` CHANGE `post_data` `post_data` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
 </p>
 <h2>Login Credentials</h2>
 <p> Email: admin@admin.com</p>
