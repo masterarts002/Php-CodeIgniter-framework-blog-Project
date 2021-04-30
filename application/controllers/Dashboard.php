@@ -11,7 +11,6 @@ class Dashboard extends CI_Controller
             redirect('dashboard-login');
         }
 
-        $this->load->model('dashboard_model');
         $data                = array();
         $data['get_all_post'] = $this->post_model->get_all_post();
         $data['maincontent'] = $this->load->view('admin/pages/home',$data, true);
@@ -46,7 +45,6 @@ class Dashboard extends CI_Controller
         $this->form_validation->set_rules('user_password', 'Admin Password', 'trim|required');
 
         if ($this->form_validation->run() == true) {
-            $this->load->model('dashboard_model');
             $result = $this->dashboard_model->get_admin_info($user_email,$user_password);
             if ($result) {
                 $this->session->set_userdata('admin_id', $result->user_id);
@@ -86,7 +84,6 @@ class Dashboard extends CI_Controller
 			$odpw=$this->input->post('oldpassword');
 			$Password=$this->input->post('Password');
 			$pwd_hash=password_hash($Password,PASSWORD_BCRYPT);
-            $this->load->model('dashboard_model');
 			if($this->dashboard_model->change_password($odpw,$pwd_hash))
 			{
 				$this->session->set_flashdata('message','successfully changed!!');
@@ -119,7 +116,6 @@ class Dashboard extends CI_Controller
 		
 		if ($this->form_validation->run())
 		{
-            $this->load->model('dashboard_model');
 			$otp = rand(100000,999999);
 			$user_email=$this->input->post('user_email');
 			if($this->dashboard_model->if_email_exist($user_email,$otp))
@@ -181,7 +177,6 @@ class Dashboard extends CI_Controller
 
     public function customers()
     {
-        $this->load->model('dashboard_model');
         $data                          = array();
         $data['customers_info'] = $this->dashboard_model->customers_info();
         $data['maincontent']           = $this->load->view('admin/pages/customers', $data, true);
@@ -193,7 +188,6 @@ class Dashboard extends CI_Controller
         if(!$this->session->userdata('admin_email')){
             redirect('dashboard-login');
         }
-        $this->load->model('dashboard_model');
         $data                          = array();
         $data['get_all_comments']      = $this->dashboard_model->get_all_comments();
         $data['read_unread_cmt_info']      = $this->dashboard_model->read_unread_cmt_info();
@@ -206,7 +200,6 @@ class Dashboard extends CI_Controller
         if(!$this->session->userdata('admin_email')){
             redirect('dashboard-login');
         }
-        $this->load->model('dashboard_model');
         $result = $this->dashboard_model->published_cmt_info($id);
         if ($result) {
             $this->session->set_flashdata('message', 'Published Comment Sucessfully');
@@ -237,7 +230,6 @@ class Dashboard extends CI_Controller
         if(!$this->session->userdata('admin_email')){
             redirect('dashboard-login');
         }
-        $this->load->model('dashboard_model');
         $result = $this->dashboard_model->delete_cmt_info($id);
         if ($result) {
             $this->session->set_flashdata('message', 'Comment Deleted Sucessfully');
@@ -253,7 +245,6 @@ class Dashboard extends CI_Controller
         if(!$this->session->userdata('admin_email')){
             redirect('dashboard-login');
         }
-        $this->load->model('dashboard_model');
         $data                          = array();
         $data['EmailSetup'] = $this->identity_model->get_email_setup();
         $data['maincontent']           = $this->load->view('admin/pages/email_config', $data, true);
@@ -297,8 +288,6 @@ class Dashboard extends CI_Controller
     
     public function contact_enquiry()
     {
-
-        $this->load->model('dashboard_model');
         $data                          = array();
         $this->dashboard_model->read_unread_contact_info();
         $data['contact_enquiry'] = $this->dashboard_model->contact_enquiry();
@@ -431,11 +420,46 @@ class Dashboard extends CI_Controller
             $this->session->set_flashdata('message', validation_errors());
             redirect('add-footer-menu');
         }
-
     }
 
-    
+    public function manage_pages()
+    {
+        $data                = array();
+        $data['all_pages']   = $this->dashboard_model->get_all_pages_info();
+        $data['maincontent'] = $this->load->view('admin/pages/manage_pages', $data, true);
+        $this->load->view('admin/master', $data);
+    }
 
-    
+    public function edit_page($id)
+    {
+        $data                     = array();
+        $data['page_info_by_id'] = $this->dashboard_model->page_info($id);
+        $data['maincontent']      = $this->load->view('admin/pages/edit_page', $data, true);
+        $this->load->view('admin/master', $data);
+    }
+
+    public function update_page($id)
+    {
+        $data                       = array();
+        $data['page_title']         = $this->input->post('page_title');
+        $data['page_data']  = $this->input->post('page_data');
+
+        $this->form_validation->set_rules('page_title', 'Page Title', 'trim|required');
+        $this->form_validation->set_rules('page_data', 'Page Data', 'trim|required');
+
+        if ($this->form_validation->run() == true) {
+            $result = $this->dashboard_model->update_page_info($data, $id);
+            if ($result) {
+                $this->session->set_flashdata('message', 'Page Update Sucessfully');
+                redirect('manage-pages');
+            } else {
+                $this->session->set_flashdata('message', 'Page Failed');
+                redirect('edit/page/'.$id);
+            }
+        } else {
+            $this->session->set_flashdata('message', validation_errors());
+            redirect('edit/page/'.$id);
+        }
+    }
 
 }

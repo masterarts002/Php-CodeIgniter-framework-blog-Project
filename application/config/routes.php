@@ -113,9 +113,15 @@ $route['edit/client/(:num)']        = 'client/edit_client/$1';
 $route['update/client/(:num)']      = 'client/update_client/$1';
 
 
+// manage pages route
+$route['manage-pages'] = 'dashboard/manage_pages';
+$route['edit/page/(:num)'] = 'dashboard/edit_page/$1';
+$route['update/page/(:num)'] = 'dashboard/update_page/$1';
+
 //policy route
 $route['terms'] = 'layout/terms';
 $route['privacy'] = 'layout/privacy';
+$route['about'] = 'layout/about';
 
 //Site Isentity route
 

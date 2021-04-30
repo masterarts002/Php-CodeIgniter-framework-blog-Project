@@ -132,5 +132,5 @@ $autoload['language'] = array();
 |
 |    $autoload['model'] = array('first_model' => 'first');
  */
-$autoload['model'] = array('category_model', 'identity_model', 'menu_model', 'profile_model', 'post_model', 'slider_model', 'client_model', 'layout_model');
+$autoload['model'] = array('category_model', 'identity_model', 'menu_model', 'profile_model', 'post_model', 'slider_model', 'client_model', 'layout_model','dashboard_model');
 $autoload['time_zone'] = date_default_timezone_set('Asia/Kolkata');

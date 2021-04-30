@@ -222,4 +222,27 @@ class Dashboard_Model extends CI_Model
            return $q->result();
     }
     
+    public function get_all_pages_info()
+    {
+      $q=$this->db->select()
+            ->from('pages_table')
+            ->get();
+           return $q->result();
+    }
+    
+    public function page_info($id)
+    {
+      $q=$this->db->select()
+            ->from('pages_table')
+            ->where('page_id',$id)
+            ->get();
+           return $q->row();
+    }
+
+    public function update_page_info($data,$id)
+    {
+        $this->db->where('page_id', $id);
+        return $this->db->update('pages_table', $data);
+    }
+    
 }
