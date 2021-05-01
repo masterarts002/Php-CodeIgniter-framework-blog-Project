@@ -665,29 +665,20 @@ class Layout extends CI_Controller
 
     
     
-    public function privacy()
+    public function pages($id)
     {
         $data                  = array();
-        $this->load->view('layout/inc/header');
-        $this->load->view('layout/pages/privacy');
-        $this->load->view('layout/inc/footer');
+        $data['page_info_by_id'] = $this->layout_model->get_page($id);
+        $meta['get_identity'] = $this->identity_model->get_identity_data();
+        $meta['site_title'] = $data['page_info_by_id']->page_title .' - '.$meta['get_identity']->site_title;
+        $meta['description'] = $meta['get_identity']->site_desc;
+        $meta['keywords'] = $meta['get_identity']->site_keywords;
+        $meta['site_favicon'] = $meta['get_identity']->site_favicon;
+        $meta['get_main_menu'] = $this->layout_model->get_main_menu();
+        $data['footer_menu']   = $this->menu_model->getall_footer_menu_info();
+        $this->load->view('layout/inc/header',$meta);
+        $this->load->view('layout/pages/page',$data);
+        $this->load->view('layout/inc/footer',$data);
     }
-
-    public function refund()
-    {
-        $data                  = array();
-        $this->load->view('layout/inc/header');
-        $this->load->view('layout/pages/refund');
-        $this->load->view('layout/inc/footer');
-    }
-
-    public function terms()
-    {
-        $data                  = array();
-        $this->load->view('layout/inc/header');
-        $this->load->view('layout/pages/terms');
-        $this->load->view('layout/inc/footer');
-    }
-
 
 }

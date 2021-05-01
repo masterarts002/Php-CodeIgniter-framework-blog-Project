@@ -29,16 +29,6 @@ class Layout_Model extends CI_Model
 
     }
 
-    public function get_single_product($product_slug)
-    {
-        $this->db->select('*');
-        $this->db->from('post_table');
-        $this->db->join('tbl_category', 'tbl_category.id=post_table.product_category');
-        $this->db->join('tbl_brand', 'tbl_brand.brand_id=post_table.product_brand');
-        $this->db->where('post_table.product_slug', $product_slug);
-        $info = $this->db->get();
-        return $info->row();
-    }
 
 
 
@@ -318,48 +308,14 @@ class Layout_Model extends CI_Model
         return $this->db->insert_id();
     }
 
-    public function edit_profile_info($id)
+    public function get_page($id)
     {
-        $this->db->select('*');
-        $this->db->from('tbl_profile');
-        $this->db->where('profile_slug', $id);
+        $this->db->select();
+        $this->db->from('pages_table');
+        $this->db->where('page_slug', $id);
         $info = $this->db->get();
         return $info->row();
     }
-
-    public function get_profile()
-    {
-        $this->db->select('*');
-        $this->db->from('tbl_profile')->limit(6);
-        $info = $this->db->get();
-        return $info->result();
-    }
-
-    public function islam_enquiry_submit($data)
-    {
-        $this->db->insert('tbl_islam_enquiry', $data);
-        return $this->db->insert_id();
-    }
-
-    public function kundali_matching_enquiry_submit($data)
-    {
-        $this->db->insert('tbl_kundali_matching', $data);
-        return $this->db->insert_id();
-    }
-
-    public function kundali_making_enquiry_submit($data)
-    {
-        $this->db->insert('tbl_kundali_making', $data);
-        return $this->db->insert_id();
-    }
-
-    public function services_submit($data)
-    {
-        $this->db->insert('tbl_services', $data);
-        return $this->db->insert_id();
-    }
-
-    
 
 
 }

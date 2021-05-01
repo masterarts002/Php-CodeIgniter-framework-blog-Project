@@ -430,6 +430,38 @@ class Dashboard extends CI_Controller
         $this->load->view('admin/master', $data);
     }
 
+    public function add_page($id)
+    {
+        $data                     = array();
+        $data['page_info_by_id'] = $this->dashboard_model->page_info($id);
+        $data['maincontent']      = $this->load->view('admin/pages/edit_page', $data, true);
+        $this->load->view('admin/master', $data);
+    }
+
+    public function save_page($id)
+    {
+        $data                       = array();
+        $data['page_title']         = $this->input->post('page_title');
+        $data['page_data']  = $this->input->post('page_data');
+
+        $this->form_validation->set_rules('page_title', 'Page Title', 'trim|required');
+        $this->form_validation->set_rules('page_data', 'Page Data', 'trim|required');
+
+        if ($this->form_validation->run() == true) {
+            $result = $this->dashboard_model->save_page_info($data);
+            if ($result) {
+                $this->session->set_flashdata('message', 'Page Update Sucessfully');
+                redirect('manage-pages');
+            } else {
+                $this->session->set_flashdata('message', 'Page Failed');
+                redirect('manage-pages');
+            }
+        } else {
+            $this->session->set_flashdata('message', validation_errors());
+            redirect('add/page');
+        }
+    }
+    
     public function edit_page($id)
     {
         $data                     = array();
@@ -459,6 +491,18 @@ class Dashboard extends CI_Controller
         } else {
             $this->session->set_flashdata('message', validation_errors());
             redirect('edit/page/'.$id);
+        }
+    }
+
+    public function delete_page($id)
+    {
+        $result = $this->layout_model->delete_page_info($id);
+        if ($result) {
+            $this->session->set_flashdata('message', 'Page Deleted Sucessfully');
+            redirect('manage-pages');
+        } else {
+            $this->session->set_flashdata('message', 'Page Deleted Failed');
+            redirect('manage-pages');
         }
     }
 
