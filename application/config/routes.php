@@ -63,7 +63,7 @@ $route['published/category/(:num)']        = 'category/published_category/$1';
 $route['unpublished/category/(:num)']      = 'category/unpublished_category/$1';
 
 //menu  Route List
-
+$route['manage/menu']                      = 'menu/index';
 
 //_footer menu  Route List
 $route['add-footer-menu']                  = 'dashboard/add_footer_menu';

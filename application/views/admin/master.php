@@ -94,11 +94,13 @@
                 <div id="sidebar-left" style="overflow-y: scroll;" class="span2">
                     <div class="nav-collapse sidebar-nav" >
                         <ul class="nav nav-tabs nav-stacked main-menu">	
-                            <li><a href="<?php echo base_url('dashboard')?>"><i class="icon-bar-chart"></i><span class="hidden-tablet"> Dashboard</span></a></li>	
-                            <li><a href="<?php echo base_url('add/category')?>"><i class="icon-list-alt"></i><span class="hidden-tablet"> Add Category</span></a></li>
+                            <li><a href="<?php echo base_url('dashboard')?>"><i class="icon-bar-chart"></i><span class="hidden-tablet"> Dashboard</span></a></li>
                             <li><a href="<?php echo base_url('contact-mail')?>"><i class="icon-envelope"></i><span class="hidden-tablet"> Contact Mail
                             <span class="badge badge-info"><?php $q=$this->db->select()->from('contact_table')->where('read_unread', FALSE)->get();
-                             $get_new_contact_rows = $q->num_rows(); If($get_new_contact_rows) { echo $get_new_contact_rows;} ?></span></span></a></li>
+                             $get_new_contact_rows = $q->num_rows(); If($get_new_contact_rows) { echo $get_new_contact_rows;} ?></span></span></a></li>	
+                            <li><a href="<?php echo base_url('add/page')?>"><i class="icon-list-alt"></i><span class="hidden-tablet"> Add Page</span></a></li>
+                            <li><a href="<?php echo base_url('manage-pages')?>"><i class="icon-edit"></i><span class="hidden-tablet"> Manage Pages</span></a></li>
+                            <li><a href="<?php echo base_url('add/category')?>"><i class="icon-list-alt"></i><span class="hidden-tablet"> Add Category</span></a></li>
                             <li><a href="<?php echo base_url('manage/category')?>"><i class="icon-edit"></i><span class="hidden-tablet"> Manage Category</span></a></li>
                             <li><a href="<?php echo base_url('manage/menu')?>"><i class="icon-edit"></i><span class="hidden-tablet"> Manage Menu</span></a></li>
                             <li><a href="<?php echo base_url('add-footer-menu')?>"><i class="icon-list-alt"></i><span class="hidden-tablet"> Add Footer Link</span></a></li>

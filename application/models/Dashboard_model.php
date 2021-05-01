@@ -245,4 +245,15 @@ class Dashboard_Model extends CI_Model
         return $this->db->update('pages_table', $data);
     }
     
+    public function save_page_info($data)
+    {
+      return $this->db->insert('pages_table', $data);
+    }
+
+    public function delete_page_info($id)
+    {
+        $this->db->where('page_id', $id);
+        return $this->db->delete('pages_table');
+    }
+    
 }

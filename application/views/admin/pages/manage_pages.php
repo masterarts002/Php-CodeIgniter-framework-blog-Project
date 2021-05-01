@@ -47,11 +47,15 @@
                         ?>
                         <tr>
                             <td><?php echo $i;?></td>
-                            <td class="center"><?php echo $single_pages->page_title;?></td>
+                            <td class="center"><?php echo $single_pages->page_title;?><br>
+                            <a style="color:blue; font-weight: 600" href="<?= base_url('page/'.$single_pages->page_slug) ?>" target="_blank"><small>View Page</small></a></td>
                             
                            <td class="center">
                                     <a class="btn btn-info" href="<?php echo base_url('edit/page/' . $single_pages->page_id); ?>">
                                         <i class="halflings-icon white edit"></i>  
+                                    </a>
+                                    <a class="btn btn-danger" onclick="myfunction()" >
+                                        <i class="halflings-icon white trash"></i> 
                                     </a>
                                 </td>
                         </tr>
@@ -69,3 +73,12 @@
 </div><!--/.fluid-container-->
 
 <!-- end: Content -->
+
+<script>
+ function myfunction() {
+  if (confirm("Press a button!")) {
+    location.href = '<?php echo base_url('delete/page/'.$single_pages->page_id) ?>';
+  } else {
+  }
+}
+</script>

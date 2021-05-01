@@ -295,44 +295,13 @@ class Dashboard extends CI_Controller
         $this->load->view('admin/master', $data);
     }
 
-    public function delete_users($id)
-    {
-        $this->db->where('customer_id', $id);
-        $this->db->delete('tbl_customer');
-        $this->session->set_flashdata('message','Deleted successfully');
-        return redirect('customers');
-    }
-    
-    public function delete_ienquiry($id)
-    {
-        $this->db->where('enquiry_id', $id);
-        $this->db->delete('tbl_islam_enquiry');
-        $this->session->set_flashdata('message','Deleted successfully');
-        return redirect('iastro-enquiry');
-    }
-    
-    public function delete_services($id)
-    {
-        $this->db->where('sevice_id', $id);
-        $this->db->delete('tbl_services');
-        $this->session->set_flashdata('message','Deleted successfully');
-        return redirect('services-enquiry');
-    }
-    
-    public function delete_bmagic($id)
-    {
-        $this->db->where('enquiry_id', $id);
-        $this->db->delete('tbl_enquiry');
-        $this->session->set_flashdata('message','Deleted successfully');
-        return redirect('bmagic-enquiry');
-    }
-    
+  
     public function delete_entry($id)
     {
         $this->db->where('contact_id', $id);
-        $this->db->delete('tbl_contact');
+        $this->db->delete('contact_table');
         $this->session->set_flashdata('message','Deleted successfully');
-        return redirect('contact-enquiry');
+        return redirect('contact-mail');
     }
     
 
@@ -430,19 +399,18 @@ class Dashboard extends CI_Controller
         $this->load->view('admin/master', $data);
     }
 
-    public function add_page($id)
+    public function add_page()
     {
-        $data                     = array();
-        $data['page_info_by_id'] = $this->dashboard_model->page_info($id);
-        $data['maincontent']      = $this->load->view('admin/pages/edit_page', $data, true);
-        $this->load->view('admin/master', $data);
-    }
-
-    public function save_page($id)
-    {
-        $data                       = array();
-        $data['page_title']         = $this->input->post('page_title');
-        $data['page_data']  = $this->input->post('page_data');
+        $data                         = array();
+        $data['page_title']           = $this->input->post('page_title');
+        $title                        = strip_tags($this->input->post('page_title'));
+        $urlslug                      = strtolower(url_title($title));
+        $q                            = $this->db->select()->where('page_slug',$urlslug)->get('pages_table');
+        if($q->num_rows()){ $titleURL = $urlslug.'-'.time();}
+        else{$titleURL = $urlslug;}
+        $data['page_slug']            = $titleURL;
+        $data['page_data']            = $this->input->post('page_data');
+        $data['create_on']            = time();
 
         $this->form_validation->set_rules('page_title', 'Page Title', 'trim|required');
         $this->form_validation->set_rules('page_data', 'Page Data', 'trim|required');
@@ -450,17 +418,20 @@ class Dashboard extends CI_Controller
         if ($this->form_validation->run() == true) {
             $result = $this->dashboard_model->save_page_info($data);
             if ($result) {
-                $this->session->set_flashdata('message', 'Page Update Sucessfully');
+                $this->session->set_flashdata('message', 'Page Created Sucessfully');
                 redirect('manage-pages');
             } else {
                 $this->session->set_flashdata('message', 'Page Failed');
-                redirect('manage-pages');
+                redirect('add/page');
             }
         } else {
             $this->session->set_flashdata('message', validation_errors());
-            redirect('add/page');
+            $data['maincontent']      = $this->load->view('admin/pages/add_page', $data, true);
+            $this->load->view('admin/master', $data);
         }
+        
     }
+
     
     public function edit_page($id)
     {
@@ -496,7 +467,7 @@ class Dashboard extends CI_Controller
 
     public function delete_page($id)
     {
-        $result = $this->layout_model->delete_page_info($id);
+        $result = $this->dashboard_model->delete_page_info($id);
         if ($result) {
             $this->session->set_flashdata('message', 'Page Deleted Sucessfully');
             redirect('manage-pages');

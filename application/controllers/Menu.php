@@ -30,6 +30,7 @@ class Menu extends CI_Controller
         $data['group_title'] = $this->menu_model->get_menu_group_title($group_id);
         $data['menu_groups'] = $this->menu_model->get_menu_groups();
         $data['all_published_category'] = $this->post_model->get_all_published_category();
+        $data['all_pages']   = $this->dashboard_model->get_all_pages_info();
         $data['all_post'] = $this->post_model->all_post();
         $data['maincontent'] = $this->load->view('admin/pages/menu', $data, true);
         $this->load->view('admin/master', $data);

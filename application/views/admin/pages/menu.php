@@ -84,6 +84,10 @@
                                           <option value="" disabled selected>Select URL</option>
                                           <option value="<?php echo base_url('blog/');?>">Blog</option>
                                           <option value="<?php echo base_url('contact-us/');?>">Contact us</option>
+                                          <?php foreach($all_pages as $page){?>
+                                          <option value="<?php echo base_url('page/'.$page->page_slug);?>"><?php echo $page->page_title;?></option>
+                                          <?php }?>
+                                          
                                           <?php foreach($all_published_category as $single_category){?>
                                           <option value="<?php echo base_url('category/'.$single_category->category_slug);?>"><?php echo $single_category->category_name;?></option>
                                           <?php }?>

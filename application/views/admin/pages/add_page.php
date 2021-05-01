@@ -1,3 +1,5 @@
+<?php echo form_open('add/page'); ?>
+
 <!-- start: Content -->
 <div id="content" class="span10">
 
@@ -10,14 +12,14 @@
         </li>
         <li>
             <i class="icon-edit"></i>
-            <a href="<?php echo base_url('edit/post/'.$page_info_by_id->page_id)?>">edit post</a>
+            <a href="<?php echo base_url('add/page');?>">Add New Page</a>
         </li>
     </ul>
 
     <div class="row-fluid">
         <div class="box span12">
             <div class="box-header" data-original-title>
-                <h2><i class="halflings-icon edit"></i><span class="break"></span>Edit post</h2>
+                <h2><i class="halflings-icon edit"></i><span class="break"></span>Add New Page</h2>
                 <div class="box-icon">
                     <a href="#" class="btn-setting"><i class="halflings-icon wrench"></i></a>
                     <a href="#" class="btn-minimize"><i class="halflings-icon chevron-up"></i></a>
@@ -32,13 +34,13 @@
                 <p><?php echo $this->session->flashdata('message');?></p>
             </div>
             <div class="box-content">
-                <form name="formName" class="form-horizontal" action="<?php echo base_url('update/page/'.$page_info_by_id->page_id);?>" method="post" enctype="multipart/form-data">
+                <form class="form-horizontal">
                     <fieldset>
 
                         <div class="control-group">
                             <label for="fileInput">Page Title</label>
                             <div class="controls">
-                                <input class="span6 typeahead" value="<?php echo $page_info_by_id->page_title;?>" name="page_title" id="fileInput" type="text"/>
+                                <input class="span6 typeahead"  name="page_title" value="<?php echo set_value('page_title');?>" id="fileInput" type="text"/>
                             </div>
                         </div>  
 
@@ -46,7 +48,7 @@
                             <label for="textarea2">Edit Page</label>
                             <div class="controls">
                                 <textarea class="ckeditor" id ="editor1" name="page_data">
-                                    <?php echo $page_info_by_id->page_data;?>
+                                    <?php echo set_value('page_data');?>
                                 </textarea>
                                 <script>CKEDITOR.replace( 'editor1', {extraPlugins: 'codesnippet',codeSnippet_theme: 'monokai_sublime'} );</script>
                             </div>
