@@ -1,13 +1,13 @@
 
 </div>
 <div class="pb-5"></div>
-<footer>
+<footer style="background-image: url('<?php echo base_url('/uploads/hmbnnrBg.jpg') ?>');">
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-sm-8">
         <div class="footer-menu text-center justify-content-between">
           <?php foreach($footer_menu as $footer_menu ) : ?>
-          <a href="<?= base_url($footer_menu->custom_menu_link); ?>"><?= $footer_menu->menu_title; ?></a>
+          <a href="<?= $footer_menu->custom_menu_link; ?>"><?= $footer_menu->menu_title; ?></a>
           <?php endforeach; ?>
         </div>
         </div>
@@ -19,7 +19,7 @@
             <a href="<?= $get_identity->company_facebook ?>"><img width="30" style="margin: 5px" src="<?= base_url('assets/layout/images/facebook.png'); ?>" alt=""></a>
             <a href="<?= $get_identity->company_twitter ?>"><img width="30" style="margin: 5px" src="<?= base_url('assets/layout/images/twitter.png'); ?>" alt=""></a>
             <a href="<?= $get_identity->site_insta_link ?>"><img width="30" style="margin: 5px" src="<?= base_url('assets/layout/images/instagram.png'); ?>" alt=""></a><br>
-            <span><?= $get_identity->site_copyright ?> - Design By | <a style="color: darkgray;" href="https://masterarts.net">Master Arts</a></sapn>
+            <small><?= $get_identity->site_copyright ?> - Design By | <a style="color: darkgray;" href="https://masterarts.net">Master Arts</a></small>
         </div>
     </div>
 </div>

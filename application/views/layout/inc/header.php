@@ -115,7 +115,7 @@ if ($(window).width() > 992) {
                         ?>
                         <?php if($submenu) : ?>
                        <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="<?= $main_menu->url; ?>" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $main_menu->title; ?></a>
+                          <a class="nav-link dropdown-toggle text-uppercase" href="<?= $main_menu->url; ?>" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $main_menu->title; ?></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <?php foreach($submenu as $row) : ?>
                           <a class="dropdown-item" href="<?= $row->url; ?>"><?= $row->title; ?></a>
@@ -125,14 +125,26 @@ if ($(window).width() > 992) {
                       </li>
                         <?php else : ?>
                        <li class="nav-item">
-                        <a class="nav-link" href="<?= $main_menu->url; ?>"><?= $main_menu->title; ?></a>
+                        <a class="nav-link text-uppercase" href="<?= $main_menu->url; ?>"><?= $main_menu->title; ?></a>
                       </li>
                         <?php endif; ?>
                       <?php endforeach; ?>
+                      <li>
+                      
+                      </li>
                     </ul>
-                    <form class="logo" action="<?php echo base_url('search');?>" method="post">
+                    <form action="<?php echo base_url('search');?>" method="post">
+                      <div class="search-wrapper">
+                        <div class="input-holder">
+                          <input type="text" name="search" class="search-input" placeholder="Type to search" required/>
+                          <button type="submit" class="search-icon" onclick="searchToggle(this, event);"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </div>
+                        <span class="close" onclick="searchToggle(this, event);"></span>
+                      </div>
+                    </form>
+                    <form class="mobile-search" action="<?php echo base_url('search');?>" method="post">
                       <div class="input-group mb-2 mt-2">
-                        <input type="text" name="search" class="form-control" placeholder="Product Search">
+                        <input type="text" name="search" class="form-control" placeholder="Product Search" required>
                         <div class="input-group-append">
                           <button class="btn btn-outline-warning" type="submit">Search</button>
                         </div>
@@ -142,7 +154,7 @@ if ($(window).width() > 992) {
             </nav>
           </div>
         </div>
-        
+
 
    
       <!--/.Content-->    
@@ -303,5 +315,35 @@ if ($(window).width() > 992) {
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      
+      </div>
+    </div>
+  </div>
+</div>
   
-    
+<script>
+function searchToggle(obj, evt){
+    var container = $(obj).closest('.search-wrapper');
+        if(!container.hasClass('active')){
+            container.addClass('active');
+            evt.preventDefault();
+        }
+        else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
+            container.removeClass('active');
+            // clear input
+            container.find('.search-input').val('');
+        }
+}
+
+</script>

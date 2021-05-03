@@ -17,6 +17,7 @@ $route['category/(:any)']                  = 'layout/category/$1';
 $route['category/(:any)/(:num)']           = 'layout/category/$1/$1';
 
 $route['search']                           = 'layout/search';
+$route['search/(:num)']                    = 'layout/search/$1';
 $route['register']                         = 'layout/customer_register';
 $route['login']                            = 'layout/customer_login';
 $route['forgot-password']                  = 'layout/forgot_password';

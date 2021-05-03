@@ -125,13 +125,13 @@ class Layout extends CI_Controller
 				$this->email->set_newline("\r\n");
 				$this->email->from($meta['EmailSetup']->email_from, "New Comment");
 				$this->email->to($meta['EmailSetup']->email_to);  
-				$this->email->subject("New Comment on".$post_title);
+				$this->email->subject("You Have New Comment on ".$post_title);
 				$this->email->message('<h3 style="color:red">New Comment on '.$post_title.
                 '</h3>Name: '.$cmt_author.
                 '<br>Email: '.$cmt_email.
                 '<br>Website: '.$cmt_url.
                 '<br>comment: '.$cmt_data.
-                '<br>Approve comment: '.base_url('manage-comment'));
+                '<br><span style="color:blue">Approve comment: '.base_url('manage-comments').'</span>');
 				$this->email->send();
 
                 $this->session->set_flashdata('message', 'Successfully submited');
@@ -185,9 +185,9 @@ class Layout extends CI_Controller
 				 );
 				$this->load->library('email', $config);
 				$this->email->set_newline("\r\n");
-				$this->email->from($meta['EmailSetup']->email_from, "New Comment");
+				$this->email->from($meta['EmailSetup']->email_from);
 				$this->email->to($meta['EmailSetup']->email_to);  
-				$this->email->subject("New Enquiry About".$about);
+				$this->email->subject("You Have New Enquiry About ".$about);
 				$this->email->message('<h3 style="color:red">New Enquiry About '.$about.
                 '</h3>Name: '.$cmt_author.
                 '<br>Email: '.$cmt_email.
@@ -237,11 +237,13 @@ class Layout extends CI_Controller
 				 );
 				$this->load->library('email', $config);
 				$this->email->set_newline("\r\n");
-				$this->email->from($meta['EmailSetup']->email_from, "New Comment");
+				$this->email->from($meta['EmailSetup']->email_from, base_url());
 				$this->email->to($email);  
 				$this->email->subject("Admin reply on your comment on".$post_title);
 				$this->email->message('<h3 style="color:red">Admin reply on your comment on '.$post_title.
-                '<br>check reply here: '.$post_url);
+                '<br>check reply here: '.$post_url.
+                '<br><br> Thank You & Regards<br>'.
+                 base_url());
 				$this->email->send();
 
                 $this->session->set_flashdata('message', 'Successfully submited');
@@ -260,7 +262,7 @@ class Layout extends CI_Controller
     {
         $this->load->library('pagination');
         $config=[
-			'base_url' => base_url('blog'),
+			'base_url' => base_url('category/'.$this->uri->segment(2)),
 			'per_page' =>9,
 			'total_rows' => $this->layout_model->num_rows(),
 			'display_pages'=>FALSE,
@@ -343,10 +345,10 @@ class Layout extends CI_Controller
 				 );
 				$this->load->library('email', $config);
 				$this->email->set_newline("\r\n");
-				$this->email->from($meta['EmailSetup']->email_from, "Astro Moderation Team");
+				$this->email->from($meta['EmailSetup']->email_from, "Master Arts Team");
 				$this->email->to($email);  
-				$this->email->subject("New Registration at AstroStarMagik");
-				$this->email->message('<h3>Dear,</h3><br>'.'User'.'<br>Your New One Time Password: '.$otp.'<br>Click <a style="color: red" href="http://astrostarmagik.com/verify-email">here</a> to set password<br><h3>Thanks & Regards,<br>Moderation Team</h3>');
+				$this->email->subject("New Registration at Master Arts");
+				$this->email->message('<h3>Dear,</h3><br>'.'User'.'<br>Your New One Time Password: '.$otp.'<br>Click <a style="color: red" href="http://masterarts.net/verify-email">here</a> to set password<br><h3>Thanks & Regards,<br>Moderation Team</h3>');
 				$this->email->send();
 				
 				$this->db->set(['email_verification_code'=>$otp])
@@ -605,18 +607,42 @@ class Layout extends CI_Controller
 
     public function search()
     {
-
         $search = $this->input->post('search');
-
+        $data                    = array();
+        $data['search_input']          = $search;
         if ($search) 
         {
-            $data                    = array();
-            $data['get_all_product'] = $this->layout_model->get_all_search_product($search);
-            $data['search']          = $search;
-            $data['get_all_category']=$this->layout_model->get_all_category();
-            $this->load->view('layout/inc/header');
-            $this->load->view('layout/pages/search', $data);
-            $this->load->view('layout/inc/footer');
+            
+            $this->load->library('pagination');
+             $config=[
+			'base_url' => base_url('search'),
+			'per_page' =>9,
+			'total_rows' => $this->layout_model->num_rows(),
+			'display_pages'=>FALSE,
+            'next_tag_open' =>"<span class='btn btn-primary'>",
+            'next_tag_close' =>"</span>",
+            'prev_tag_open' =>"<span class='btn btn-primary'>",
+            'prev_tag_close' =>"</span>",
+			'next_link' => ' '.'Next <i class="fa fa-long-arrow-right" aria-hidden="true"></i>',
+			'prev_link' => '<i class="fa fa-long-arrow-left" aria-hidden="true"></i> Previous',
+			'first_link' => FALSE,
+			'last_link' => FAlSE
+		   ];
+		   $this->pagination->initialize($config);
+           $data                          = array();
+           $meta['get_identity'] = $this->identity_model->get_identity_data();
+           $meta['site_title'] = 'Blog - '.$meta['get_identity']->site_title;
+           $meta['description'] = $meta['get_identity']->site_desc;
+           $meta['keywords'] = $meta['get_identity']->site_keywords;
+           $meta['site_favicon'] = $meta['get_identity']->site_favicon;
+           $meta['get_main_menu'] = $this->layout_model->get_main_menu();
+           $data['get_post']  = $this->layout_model->get_all_search_post($config['per_page'],$this->uri->segment(2),$search);
+           $data['get_recent_post']  = $this->layout_model->get_recent_post();
+           $data['all_published_category'] = $this->post_model->get_all_published_category();
+           $meta['footer_menu']   = $this->menu_model->getall_footer_menu_info();
+           $this->load->view('layout/inc/header',$meta);
+           $this->load->view('layout/pages/search', $data);
+           $this->load->view('layout/inc/footer',$meta);
         }
     }
 

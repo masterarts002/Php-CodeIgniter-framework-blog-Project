@@ -272,19 +272,18 @@ class Layout_Model extends CI_Model
         return $info->result();
     }
 
-    public function get_all_search_product($search)
+    public function get_all_search_post($limit,$offset,$search)
     {
         $this->db->select('*');
         $this->db->from('post_table');
-        $this->db->join('tbl_category', 'tbl_category.id=post_table.product_category');
-        $this->db->join('tbl_brand', 'tbl_brand.brand_id=post_table.product_brand');
-        $this->db->order_by('post_table.product_id', 'DESC');
+        $this->db->join('admin_table', 'admin_table.user_id=post_table.post_author');
+        $this->db->limit($limit,$offset);
         $this->db->where('post_table.publication_status', 1);
-        $this->db->like('post_table.product_title', $search, 'both');
-        $this->db->or_like('post_table.product_short_description', $search, 'both');
-        $this->db->or_like('post_table.product_long_description', $search, 'both');
-        $this->db->or_like('tbl_category.category_name', $search, 'both');
-        $this->db->or_like('tbl_brand.brand_name', $search, 'both');
+        $this->db->like('post_table.post_title', $search, 'both');
+        $this->db->or_like('post_table.post_data', $search, 'both');
+        $this->db->or_like('post_table.post_keywords', $search, 'both');
+        $this->db->or_like('post_table.post_description', $search, 'both');
+        $this->db->or_like('post_table.post_category', $search, 'both');
         $info = $this->db->get();
         return $info->result();
     }

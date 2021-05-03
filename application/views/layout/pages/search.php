@@ -1,67 +1,58 @@
-<div class="pb-1"></div>
-<div class="row">
-    <div class="col-sm-3 category-bar bg-light">
-    <form action="<?php echo base_url('search');?>" method="post">
-        <div class="input-group mb-3">
-          <input type="text" name="search" class="form-control" placeholder="Search">
-          <div class="input-group-append">
-            <button class="btn btn-outline-warning" type="submit">Search</button>
-          </div>
-        </div>
-    </form>
-        <h3>Product categories</h3><hr>
-        <?php
-         foreach ($get_all_category as $row) {
-        ?>
-        <p><a href="<?php echo base_url('category/'.$row->category_slug); ?>"><?php echo $row->category_name; ?></a>
-        <span>
-        (<?php 
-        $q = $this->db->select()->where('product_category',$row->id)->get('tbl_product');
-        echo $q->num_rows();
-        ?>)</span></p>
-        <?php } ?>
-    </div>
 
-    <div class="col-sm-9">
-        <div class="content_top">
+
+      
+<div class="row justify-content-center">
+   <div class="col-sm-10">
+       <div class="row">
+           <div class="col-sm-8">
+            <?php if($get_post) : ?>
+           <div class="pt-3">
             <div class="heading">
-                <h3>You Are Searching For <b style="color:red"><?php if($search){echo $search;}?></b></h3>
+                <h3>You Are Searching For <b style="color:red"><?= $this->input->post('search');?></b></h3>
             </div>
-        </div>
-
-        <?php
-        if($get_all_product) {
-        $arr_chunk_product = array_chunk($get_all_product, 4);
-
-        foreach ($arr_chunk_product as $chunk_products) {
-            ?>
-            <div class="row  featured">
-                <?php foreach ($chunk_products as $row) { ?>
-                    <div class="col-sm-3 products col-6">
-                        <div class="card h-100 text-center">
-                            <a href="<?php echo base_url('single-product/' . $row->product_slug); ?>">
-                            <img class="card-img-top product-image" src="<?php echo base_url('uploads/' . $row->product_image) ?>" alt="" /></a>
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $row->product_title; ?> </h5>
-                            <?php if($row->id == "9") :?>
-                            <p class="card-text"><span class="price">Donation Based Products</span></p>
-                            <a class="my-btn" href="<?php echo base_url('/'); ?>">Donate</a>
-                            <?php else : ?>
-                            <p class="card-text"><span class="price"><?php echo $this->cart->format_number($row->product_price); ?> ₹</span></p>
-                            <a class="my-btn" href="<?php echo base_url('single-product/' . $row->product_slug); ?>">Buy</a>
-                            <?php endif; ?>
-                        </div>
+           </div>
+             <?php foreach($get_post as $row) : ?>
+           <div class="row blog-post">
+             <div class="col-sm-5">
+               <a href="<?= base_url('post/'.$row->post_slug) ?>"><img class="img-fluid" src="<?= base_url('uploads/'.$row->post_image) ?>" alt=""></a>
+             </div>
+             <div class="col-sm-7">
+               <a href="<?= base_url('post/'.$row->post_slug) ?>"><h3 class="text-capitalize"><?= $row->post_title ?></h3></a>
+               <h5><i class="fa fa-user" aria-hidden="true"></i> <?= $row->user_name ?> 
+               <span><i class="fa fa-bar-chart" aria-hidden="true"></i> <?= $row->post_view ?></span>
+               <span><i class="fa fa-comments" aria-hidden="true"></i> <?php
+               $this->db->select();
+               $this->db->from('cmt_table');
+               $this->db->where('cmt_post_id', $row->post_slug);
+               $info = $this->db->get();
+               echo $info->num_rows();
+               ?></span></h5>
+               <p><?php $today = word_limiter($row->post_data,50); echo strip_tags($today); ?></p>
+               <a class="my-btn2" href="<?= base_url('post/'.$row->post_slug) ?>">Read More</a>
+             </div>
+           </div>
+             <?php endforeach; ?>
+             <?php else : ?>
+            <div>
+                <h3>No data Found For <b style="color:red"><?= $this->input->post('search');?></b></h3>
+                <form  action="<?php echo base_url('search');?>" method="post">
+                    <div class="input-group mb-2 mt-2">
+                        <input type="text" name="search" class="form-control" placeholder="Product Search" required>
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-warning" type="submit">Search</button>
                         </div>
                     </div>
-                    <?php
-                }
-                ?>
-
+                </form>
             </div>
-            <?php
-        }} else{
-            echo "<h2 class='card p-5 text-center'>No product found related '$search'";
-        }
-        ?>
-    </div>    
+            <?php endif; ?>
+           </div>
+           <div class="col-sm-4">
+           <?php include 'sidebar.php'?>
+           </div>
+       </div>
+       <div class="pt-3"></div>
+       
+        <?php  echo $this->pagination->create_links(); ?>
+       </span>
+   </div>
 </div>
