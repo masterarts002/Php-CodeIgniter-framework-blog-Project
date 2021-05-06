@@ -534,4 +534,16 @@ class Dashboard extends CI_Controller
         }
     }
 
+    public function delete_image($id)
+    {
+        $result = $this->dashboard_model->delete_image($id);
+        if ($result) {
+            $this->session->set_flashdata('message', 'Image Deleted Sucessfully');
+            redirect('gallery');
+        } else {
+            $this->session->set_flashdata('message', 'Image Deleted Failed');
+            redirect('gallery');
+        }
+    }
+
 }

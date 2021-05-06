@@ -25,12 +25,19 @@
             </div>
             <?php  echo $this->pagination->create_links(); ?>
         </div><!--/span-->
-        <div class="box span3" style="padding:10px">
-            <h3>Image Details</h3>
-            <img id="imageBox" src="" alt=""><br>
-            <h3>Image Url</h3>
-            <input id="imageUrl" class="span12 typeahead" type="text">
-            <button onclick="myFunction()">Copy Url</button>
+          <div class="box span3" style="padding:10px">
+            <div id="info">
+               <h3>Info:</h3>
+               <p>Click on image to get url</p><hr>
+            </div>
+            <div id="imagedeatils" class="hidden">
+               <h3>Image Details</h3>
+               <img id="imageBox" src="" alt=""><br>
+               <a style="color:red" id="DeleteID" href="">Delete Image</a>
+               <h3>Image Url</h3>
+               <input id="imageUrl" class="span12 typeahead" type="text">
+               <button onclick="myFunction()">Copy Url</button>
+            </div>
             <h3>Add Image</h3>
             <style type="text/css">
                 #result{color:red;padding: 5px}
@@ -62,11 +69,13 @@
 function doWithThisElement(event) {
     event = event || window.event; // IE
     var target = event.target || event.srcElement; // IE
-
+    $('#imagedeatils').removeClass("hidden");
+    $('#info').addClass("hidden");
     var id = target.id;
     var Image = document.getElementById(id).src;
     document.getElementById('imageBox').src = Image;
     document.getElementById('imageUrl').value = Image;
+    document.getElementById('DeleteID').href = '<?= base_url('delete/image/') ?>'+id;
 }
 function myFunction() {
   var copyText = document.getElementById("imageUrl");

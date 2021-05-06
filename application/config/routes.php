@@ -96,6 +96,7 @@ $route['dashboard/set-new-password']       = 'dashboard/set_new_password';
 $route['user/send-otp']                    = 'dashboard/send_otp';
 $route['gallery']                          = 'dashboard/gallery';
 $route['save/image']                       = 'dashboard/save_image';
+$route['delete/image/(:num)']              = 'dashboard/delete_image/$1';
 $route['gallery/(:num)']                   = 'dashboard/gallery/$1';
 
 //Slider  Route List

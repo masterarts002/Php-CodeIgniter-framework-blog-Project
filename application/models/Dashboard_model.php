@@ -279,4 +279,10 @@ class Dashboard_Model extends CI_Model
         return $this->db->delete('pages_table');
     }
     
+    public function delete_image($id)
+    {
+        $this->db->where('img_id', $id);
+        return $this->db->delete('gallery_table');
+    }
+    
 }
