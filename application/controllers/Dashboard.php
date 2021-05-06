@@ -477,4 +477,61 @@ class Dashboard extends CI_Controller
         }
     }
 
+    public function gallery()
+    {
+        $data                     = array();
+        $this->load->library('pagination');
+             $config=[
+			'base_url' => base_url('gallery'),
+			'per_page' =>16,
+			'total_rows' => $this->dashboard_model->num_rows(),
+			'display_pages'=>FALSE,
+            'next_tag_open' =>"<span class='btn btn-primary'>",
+            'next_tag_close' =>"</span>",
+            'prev_tag_open' =>"<span class='btn btn-primary'>",
+            'prev_tag_close' =>"</span>",
+			'next_link' => ' '.'Next <i class="icon-arrow-right" aria-hidden="true"></i>',
+			'prev_link' => '<i class="icon-arrow-left" aria-hidden="true"></i> Previous',
+			'first_link' => FALSE,
+			'last_link' => FAlSE
+		   ];
+		$this->pagination->initialize($config);
+        $data['image'] = $this->dashboard_model->get_image_info($config['per_page'],$this->uri->segment(2));
+        $data['maincontent']      = $this->load->view('admin/pages/gallery', $data, true);
+        $this->load->view('admin/master', $data);
+    }
+    
+    public function save_image()
+    {
+        $data                     = array();
+        if (!empty($_FILES['post_image']['name'])) {
+            $config['upload_path']   = './imggallery/';
+            $config['allowed_types'] = '*';
+            $config['max_size']      = 4096;
+            $config['max_width']     = 3000;
+            $config['max_height']    = 2000;
+
+            $this->upload->initialize($config);
+
+            if (!$this->upload->do_upload('post_image')) {
+                $error = $this->upload->display_errors();
+                $this->session->set_flashdata('message', $error);
+                redirect('gallery');
+            } 
+            else {
+                $post_image            = $this->upload->data();
+                $data['gallery_image'] = $post_image['file_name'];
+                $result = $this->dashboard_model->save_image_info($data);
+
+               if ($result) {
+                $this->session->set_flashdata('message', 'Image Inserted Sucessfully');
+                redirect('gallery');
+                } else {
+                $this->session->set_flashdata('message', 'Image Inserted Failed');
+                redirect('gallery');
+                }
+            }
+        }
+    }
+
 }

@@ -58,7 +58,7 @@ class Post extends CI_Controller
             $config['upload_path']   = './uploads/';
             $config['allowed_types'] = '*';
             $config['max_size']      = 4096;
-            $config['max_width']     = 2000;
+            $config['max_width']     = 3000;
             $config['max_height']    = 2000;
 
             $this->upload->initialize($config);

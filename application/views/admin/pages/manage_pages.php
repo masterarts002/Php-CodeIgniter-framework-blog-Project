@@ -76,7 +76,7 @@
 
 <script>
  function myfunction() {
-  if (confirm("Press a button!")) {
+  if (confirm("Are You Sure? You want to delete this item? ")) {
     location.href = '<?php echo base_url('delete/page/'.$single_pages->page_id) ?>';
   } else {
   }

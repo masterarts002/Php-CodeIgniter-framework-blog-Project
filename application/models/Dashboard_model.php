@@ -245,9 +245,32 @@ class Dashboard_Model extends CI_Model
         return $this->db->update('pages_table', $data);
     }
     
+    public function save_image_info($data)
+    {
+      return $this->db->insert('gallery_table', $data);
+    }
+    
     public function save_page_info($data)
     {
       return $this->db->insert('pages_table', $data);
+    }
+
+    public function get_image_info($limit,$offset)
+    {
+        $this->db->select('*');
+        $this->db->from('gallery_table');
+        $this->db->limit($limit,$offset);
+        $info = $this->db->get();
+        return $info->result();
+    }
+
+    public function num_rows()
+    {
+        $q=$this->db->select()
+            ->from('gallery_table')
+            ->get();
+           return $q->num_rows();
+
     }
 
     public function delete_page_info($id)

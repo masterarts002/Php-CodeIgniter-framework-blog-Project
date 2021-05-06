@@ -1,6 +1,4 @@
-
-
-      
+     
 <div class="row justify-content-center">
    <div class="col-sm-10">
        <div class="row">
@@ -53,6 +51,5 @@
        <div class="pt-3"></div>
        
         <?php  echo $this->pagination->create_links(); ?>
-       </span>
    </div>
 </div>

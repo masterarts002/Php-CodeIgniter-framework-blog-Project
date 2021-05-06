@@ -85,7 +85,7 @@ $route['published/post/(:num)']            = 'post/published_post/$1';
 $route['unpublished/post/(:num)']          = 'post/unpublished_post/$1';
 
 
-//Admin login
+//Admin Dashboard
 $route['dashboard-login']                  = 'dashboard/dashboard_login';
 $route['dashboard_login_check']            = 'dashboard/dashboard_login_check';
 $route['dashboard-change-password']        = 'dashboard/dashboard_change_pw';
@@ -94,6 +94,9 @@ $route['dashboard-logout']                 = 'dashboard/logout';
 $route['dashboard/forgot-password']        = 'dashboard/forgot_password';
 $route['dashboard/set-new-password']       = 'dashboard/set_new_password';
 $route['user/send-otp']                    = 'dashboard/send_otp';
+$route['gallery']                          = 'dashboard/gallery';
+$route['save/image']                       = 'dashboard/save_image';
+$route['gallery/(:num)']                   = 'dashboard/gallery/$1';
 
 //Slider  Route List
 $route['add/slider']                       = 'slider/add_slider';

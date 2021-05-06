@@ -28,15 +28,7 @@ body{font-family: 'Times New Roman', Times, serif !important; font-size: 18px !i
   }
 
  
-  .carousel-caption{
-    margin-bottom: 100px !important;
-    margin-right: 0px !important;
-    text-align: left;
-    
-  }
-  .carousel-caption h1{
-    font-size: 40px !important;
-  }
+  
   .col-md-12{
     padding-left: 0px !important;
     padding-right: 0px !important;
@@ -145,7 +137,7 @@ body{font-family: 'Times New Roman', Times, serif !important; font-size: 18px !i
     display: none;
   }
 }
-@media (max-width: 1024px){
+@media only screen and (max-width: 1000px) and (min-width: 500px){
 
 
   .search-wrapper {
