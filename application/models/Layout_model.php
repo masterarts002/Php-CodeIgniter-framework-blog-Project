@@ -38,7 +38,6 @@ class Layout_Model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('post_table');
-        $this->db->join('admin_table', 'admin_table.user_id=post_table.post_author');
         $this->db->order_by('post_table.post_id', 'DESC');
         $this->db->limit($limit,$offset);
         $this->db->where('post_table.publication_status', 1);
@@ -53,7 +52,15 @@ class Layout_Model extends CI_Model
         $this->db->from('post_table');
         $this->db->where('post_table.publication_status', 1);
         $this->db->where('post_table.post_slug', $id);
-        $this->db->join('admin_table', 'admin_table.user_id=post_table.post_author');
+        $info = $this->db->get();
+        return $info->row();
+    }
+    
+    public function cat_details_by_id($id)
+    {
+        $this->db->select();
+        $this->db->from('categories_table');
+        $this->db->where('category_slug', $id);
         $info = $this->db->get();
         return $info->row();
     }
@@ -243,9 +250,9 @@ class Layout_Model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('post_table');
-        $this->db->join('admin_table', 'admin_table.user_id=post_table.post_author');
         $this->db->where('post_table.publication_status', 1);
         $this->db->limit(4);
+        $this->db->order_by('published_date','DESC');
         $info = $this->db->get();
         return $info->result();
     }
@@ -254,9 +261,9 @@ class Layout_Model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('post_table');
-        $this->db->join('admin_table', 'admin_table.user_id=post_table.post_author');
         $this->db->where('post_table.publication_status', 1);
         $this->db->limit(9);
+        $this->db->order_by('published_date','DESC');
         $info = $this->db->get();
         return $info->result();
     }
@@ -265,8 +272,8 @@ class Layout_Model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('post_table');
-        $this->db->join('admin_table', 'admin_table.user_id=post_table.post_author');
         $this->db->limit($limit,$offset);
+        $this->db->order_by('published_date','DESC');
         $this->db->where('post_table.publication_status', 1);
         $info = $this->db->get();
         return $info->result();
@@ -276,7 +283,6 @@ class Layout_Model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('post_table');
-        $this->db->join('admin_table', 'admin_table.user_id=post_table.post_author');
         $this->db->limit($limit,$offset);
         $this->db->where('post_table.publication_status', 1);
         $this->db->like('post_table.post_title', $search, 'both');
@@ -284,6 +290,7 @@ class Layout_Model extends CI_Model
         $this->db->or_like('post_table.post_keywords', $search, 'both');
         $this->db->or_like('post_table.post_description', $search, 'both');
         $this->db->or_like('post_table.post_category', $search, 'both');
+        $this->db->or_like('post_table.post_author', $search, 'both');
         $info = $this->db->get();
         return $info->result();
     }

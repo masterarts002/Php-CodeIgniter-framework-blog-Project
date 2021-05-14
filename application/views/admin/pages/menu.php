@@ -83,6 +83,7 @@
                                         <select type="text" style="width: 100% !important;" id="menu-url" name="url">
                                           <option value="" disabled selected>Select URL</option>
                                           <option value="<?php echo base_url('blog/');?>">Blog</option>
+                                          <option value="<?php echo base_url('guest-post/');?>">Guest Post</option>
                                           <option value="<?php echo base_url('contact-us/');?>">Contact us</option>
                                           <?php foreach($all_pages as $page){?>
                                           <option value="<?php echo base_url('page/'.$page->page_slug);?>"><?php echo $page->page_title;?></option>

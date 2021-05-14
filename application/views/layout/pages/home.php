@@ -134,8 +134,8 @@
 
 <div class="row row2">
   <div class="col-md-12">
-    <h1>We Can Build Your Website</h1><h4>So what are you waiting for?</h4>
-    <a class="my-btn2" href="<?= base_url('contact Us') ?>">Get Started Now</a>
+    <h1>Looking For Guest Post</h1><h4>So what are you waiting for?</h4>
+    <a class="my-btn2" href="<?= base_url('guest-post') ?>">Submit Guest Post</a>
   </div>
 </div>
 
@@ -151,7 +151,7 @@
       </div>
       <div class="col-md-8">
         <a href="<?= base_url('post/'.$row->post_slug) ?>"><h3><?= $row->post_title ?></h3></a>
-        <h5><i class="fa fa-user" aria-hidden="true"></i> <?= $row->user_name ?> 
+        <h5><i class="fa fa-user" aria-hidden="true"></i> <?= $row->post_author ?> 
         <span><i class="fa fa-eye" aria-hidden="true"></i> <?= $row->post_view ?></span>
         <span><i class="fa fa-comments" aria-hidden="true"></i> <?php
                $this->db->select();

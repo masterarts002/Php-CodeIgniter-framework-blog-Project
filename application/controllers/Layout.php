@@ -276,15 +276,17 @@ class Layout extends CI_Controller
 			'last_link' => FAlSE
 		   ];
 		$this->pagination->initialize($config);
-        $data                          = array();$meta['get_identity'] = $this->identity_model->get_identity_data();
-        $meta['site_title'] = 'Post Categories - '.$meta['get_identity']->site_title;
-        $meta['description'] = $meta['get_identity']->site_desc;
+        $data                          = array();
+        $data['all_published_category'] = $this->post_model->get_all_published_category();
+        $data['cat_details_by_id'] = $this->layout_model->cat_details_by_id($id);
+        $meta['get_identity'] = $this->identity_model->get_identity_data();
+        $meta['site_title'] = $data['cat_details_by_id']->category_name.' - '.$meta['get_identity']->site_title;
+        $meta['description'] = $data['cat_details_by_id']->category_description;
         $meta['keywords'] = $meta['get_identity']->site_keywords;
         $meta['site_favicon'] = $meta['get_identity']->site_favicon;
         $meta['get_main_menu'] = $this->layout_model->get_main_menu();
         $data['get_post']  = $this->layout_model->get_all_post_by_categories($config['per_page'],$id,$this->uri->segment(2));
         $data['get_recent_post']  = $this->layout_model->get_recent_post();
-        $data['all_published_category'] = $this->post_model->get_all_published_category();
         $meta['footer_menu']   = $this->menu_model->getall_footer_menu_info();
         $this->load->view('layout/inc/header',$meta);
         $this->load->view('layout/pages/category', $data);
@@ -601,10 +603,6 @@ class Layout extends CI_Controller
 		}	
     }
 
-
-
-    
-
     public function search()
     {
         $search = $this->input->post('search');
@@ -631,7 +629,7 @@ class Layout extends CI_Controller
 		   $this->pagination->initialize($config);
            $data                          = array();
            $meta['get_identity'] = $this->identity_model->get_identity_data();
-           $meta['site_title'] = 'Blog - '.$meta['get_identity']->site_title;
+           $meta['site_title'] = 'Search Result of '.$search;
            $meta['description'] = $meta['get_identity']->site_desc;
            $meta['keywords'] = $meta['get_identity']->site_keywords;
            $meta['site_favicon'] = $meta['get_identity']->site_favicon;
@@ -667,11 +665,6 @@ class Layout extends CI_Controller
     }
 
     
-
-    
-
-    
-
     public function contact()
     {
         $data                          = array();
@@ -696,15 +689,153 @@ class Layout extends CI_Controller
         $data                  = array();
         $data['page_info_by_id'] = $this->layout_model->get_page($id);
         $meta['get_identity'] = $this->identity_model->get_identity_data();
-        $meta['site_title'] = $data['page_info_by_id']->page_title .' - '.$meta['get_identity']->site_title;
-        $meta['description'] = $meta['get_identity']->site_desc;
-        $meta['keywords'] = $meta['get_identity']->site_keywords;
+        $meta['site_title'] = $data['page_info_by_id']->post_title .' - '.$meta['get_identity']->site_title;
+        $meta['description'] = $data['page_info_by_id']->post_description;
+        $meta['keywords'] = $data['page_info_by_id']->post_keywords;
         $meta['site_favicon'] = $meta['get_identity']->site_favicon;
         $meta['get_main_menu'] = $this->layout_model->get_main_menu();
         $data['footer_menu']   = $this->menu_model->getall_footer_menu_info();
         $this->load->view('layout/inc/header',$meta);
         $this->load->view('layout/pages/page',$data);
         $this->load->view('layout/inc/footer',$data);
+    }
+
+    public function error()
+    {
+        $data                  = array();
+        $meta['get_identity'] = $this->identity_model->get_identity_data();
+        $meta['site_title'] = '404 not found - '.$meta['get_identity']->site_title;
+        $meta['description'] = $meta['get_identity']->site_desc;
+        $meta['keywords'] = $meta['get_identity']->site_keywords;
+        $meta['site_favicon'] = $meta['get_identity']->site_favicon;
+        $meta['get_main_menu'] = $this->layout_model->get_main_menu();
+        $data['footer_menu']   = $this->menu_model->getall_footer_menu_info();
+        $this->load->view('layout/inc/header',$meta);
+        $this->load->view('layout/pages/error',$data);
+        $this->load->view('layout/inc/footer',$data);
+    }
+
+    public function guest_post()
+    {
+        $data                  = array();
+        $data['all_published_category'] = $this->post_model->get_all_published_category();
+        $data['get_recent_post']  = $this->layout_model->get_recent_post();
+        $meta['get_identity'] = $this->identity_model->get_identity_data();
+        $meta['site_title'] = 'Free Guest Post - '.$meta['get_identity']->site_title;
+        $meta['description'] = 'Master arts provide free guest post for all who looking for free guest post.
+        here you can add your post with free do follow link inside your post.';
+        $meta['keywords'] = 'free guest post';
+        $meta['site_favicon'] = $meta['get_identity']->site_favicon;
+        $meta['get_main_menu'] = $this->layout_model->get_main_menu();
+        $data['footer_menu']   = $this->menu_model->getall_footer_menu_info();
+        $this->load->view('layout/inc/header',$meta);
+        $this->load->view('layout/pages/guest_post',$data);
+        $this->load->view('layout/inc/footer',$data);
+    }
+
+    public function save_post()
+    {
+        
+        $data                              = array();
+        $meta['EmailSetup'] = $this->identity_model->get_email_setup();
+        $data['post_title']             = $this->input->post('post_title');
+        $title = strip_tags($this->input->post('post_title'));
+        $urlslug = strtolower(url_title($title));
+        $q = $this->db->select()->where('post_slug',$urlslug)->get('post_table');
+        if($q->num_rows()){ $titleURL = $urlslug.'-'.time();}
+        else{$titleURL = $urlslug;}
+        $data['post_slug']                 = $titleURL;
+        $data['post_title']                = $this->input->post('post_title');
+        $data['post_data']                 = $this->input->post('post_data');
+        $data['post_category']             = $this->input->post('post_category');
+        $data['publication_status']        = FALSE;
+        $data['post_author']               = $this->input->post('post_author');
+        $data['post_author_email']         = $this->input->post('post_author_email');
+        $data['published_date']            = time();
+
+        $this->form_validation->set_rules('post_title', 'post Title', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('post_data', 'Write Post', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('post_category', 'post Category', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('post_author', 'Author Name', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('post_author_email', 'Author Email', 'trim|required|xss_clean');
+
+        if (!empty($_FILES['post_image']['name'])) {
+            $config['upload_path']   = './uploads/';
+            $config['allowed_types'] = '*';
+            $config['max_size']      = 4096;
+            $config['max_width']     = 3000;
+            $config['max_height']    = 2000;
+
+            $this->upload->initialize($config);
+
+            if (!$this->upload->do_upload('post_image')) {
+                $error = $this->upload->display_errors();
+                $this->session->set_flashdata('message', $error);
+                redirect('guest-post');
+            } else {
+                $post_image            = $this->upload->data();
+                $data['post_image'] = $post_image['file_name'];
+            }
+        }
+        if ($this->form_validation->run() == true) {
+
+            $result = $this->post_model->save_post_info($data);
+            if ($result) {
+				$config = Array(
+					'protocol' => $meta['EmailSetup']->protocol,
+					'smtp_host' => $meta['EmailSetup']->smtp_host,
+					'smtp_port' => $meta['EmailSetup']->smtp_port,
+					'smtp_user' => $meta['EmailSetup']->smtp_user,
+					'smtp_pass' => $meta['EmailSetup']->smtp_pass,
+					'mailtype' => $meta['EmailSetup']->mailtype,
+					'charset' => $meta['EmailSetup']->charset,
+					'wordwrap' => $meta['EmailSetup']->wordwrap
+				 );
+				$this->load->library('email', $config);
+				$this->email->set_newline("\r\n");
+				$this->email->from($meta['EmailSetup']->email_from, "Master Arts Team");
+				$this->email->to($data['post_author_email']);  
+				$this->email->subject("Submited Post at Master Arts");
+				$this->email->message('<h3>Dear, Guest</h3><br>
+                <br>Post Submited Sucessfully<br>
+                Your Post Under Review. We will Get Back To You Soon<br>
+                Do not reply this email!<br>
+                For any inquiries please contact<br>
+                You can contact at https://masterarts.net/contact-us <br>
+                Email-Us at nk@masterarts.net <br><br>
+                <h4>Thanks & Regards</h4><img width="150px" src="https://masterarts.net/uploads/MASTERARTS.png"/> ');
+				$this->email->send();
+                // for notifaction
+                $config = Array(
+					'protocol' => $meta['EmailSetup']->protocol,
+					'smtp_host' => $meta['EmailSetup']->smtp_host,
+					'smtp_port' => $meta['EmailSetup']->smtp_port,
+					'smtp_user' => $meta['EmailSetup']->smtp_user,
+					'smtp_pass' => $meta['EmailSetup']->smtp_pass,
+					'mailtype' => $meta['EmailSetup']->mailtype,
+					'charset' => $meta['EmailSetup']->charset,
+					'wordwrap' => $meta['EmailSetup']->wordwrap
+				 );
+				$this->load->library('email', $config);
+				$this->email->set_newline("\r\n");
+				$this->email->from($meta['EmailSetup']->email_from, "Master Arts Team");
+				$this->email->to($meta['EmailSetup']->email_to);  
+				$this->email->subject("New Guest Post at Master Arts");
+				$this->email->message('<h3>Dear, Master Arts<br>
+                Some on add guest post to your please review it</h3><br>
+                <h4>Thanks & Regards</h4><img width="150px" src="https://masterarts.net/uploads/MASTERARTS.png"/> ');
+				$this->email->send();
+                
+                $this->session->set_flashdata('message', 'Post Submited Sucessfully/We will Get Back to You Soon');
+                redirect('guest-post');
+            } else {
+                $this->session->set_flashdata('message', 'post Submited Failed');
+                redirect('guest-post');
+            }
+        } else {
+            $this->session->set_flashdata('message', validation_errors());
+            redirect('guest-post');
+        }
     }
 
 }

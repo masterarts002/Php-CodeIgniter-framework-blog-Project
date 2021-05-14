@@ -16,7 +16,7 @@
              </div>
              <div class="col-sm-7">
                <a href="<?= base_url('post/'.$row->post_slug) ?>"><h3 class="text-capitalize"><?= $row->post_title ?></h3></a>
-               <h5><i class="fa fa-user" aria-hidden="true"></i> <?= $row->user_name ?> 
+               <h5><i class="fa fa-user" aria-hidden="true"></i> <?= $row->post_author ?> 
                <span><i class="fa fa-bar-chart" aria-hidden="true"></i> <?= $row->post_view ?></span>
                <span><i class="fa fa-comments" aria-hidden="true"></i> <?php
                $this->db->select();

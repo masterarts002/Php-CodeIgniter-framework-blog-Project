@@ -9,7 +9,7 @@
              </div>
              <div class="col-md-7">
                <a href="<?= base_url('post/'.$row->post_slug) ?>"><h3 class="text-capitalize"><?= $row->post_title ?></h3></a>
-               <h5><i class="fa fa-user" aria-hidden="true"></i> <?= $row->user_name ?> 
+               <h5><i class="fa fa-user" aria-hidden="true"></i> <?= $row->post_author ?> 
                <span><i class="fa fa-eye" aria-hidden="true"></i> <?= $row->post_view ?></span>
                <span><i class="fa fa-comments" aria-hidden="true"></i> 3</span></h5>
                <p><?php $today = word_limiter($row->post_data,50); echo strip_tags($today); ?></p>

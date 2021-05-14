@@ -16,7 +16,7 @@
                <?php include 'adsense_artical.php'?>
                <p><?= $get_single_post->post_data; ?></p>
                <div class="d-flex justify-content-between">
-               <span><i class="fa fa-user" aria-hidden="true"></i> <?= $get_single_post->user_name ?></span> 
+               <span><i class="fa fa-user" aria-hidden="true"></i> <?= $get_single_post->post_author ?></span> 
                <span><i class="fa fa-comments" aria-hidden="true"></i> <?= $get_total_comments ?> Comments</span>
                </div>
                <div class="social">

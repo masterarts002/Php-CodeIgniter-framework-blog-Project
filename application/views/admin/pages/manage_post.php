@@ -54,7 +54,7 @@
                             <td class="center"><?php echo $single_post->post_title;?><br>
                             <a style="color:blue; font-weight: 600" href="<?= base_url('post/'.$single_post->post_slug) ?>" target="_blank"><small>View Post</small></a>
                             </td>
-                            <td class="center"><?php echo $single_post->user_name;?></td>
+                            <td class="center"><?php echo $single_post->post_author;?></td>
                             <td class="center"><?php echo $single_post->category_name;?></td>
                             <td class="center"><?php echo $single_post->post_keywords;?></td>
                             <td class="center">

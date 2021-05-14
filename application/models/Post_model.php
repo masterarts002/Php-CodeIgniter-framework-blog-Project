@@ -13,7 +13,6 @@ class Post_Model extends CI_Model
         $this->db->select('*,post_table.publication_status as pstatus');
         $this->db->from('post_table');
         $this->db->join('categories_table', 'categories_table.category_slug=post_table.post_category');
-        $this->db->join('admin_table', 'admin_table.user_id=post_table.post_author');
         $this->db->order_by('post_table.post_id', 'DESC');
         $info = $this->db->get();
         return $info->result();

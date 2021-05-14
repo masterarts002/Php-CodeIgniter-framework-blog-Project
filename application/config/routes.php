@@ -15,7 +15,8 @@ $route['reply/(:num)']                     = 'layout/addrep/$1';
 $route['contact-us']                       = 'layout/contact';
 $route['category/(:any)']                  = 'layout/category/$1';
 $route['category/(:any)/(:num)']           = 'layout/category/$1/$1';
-
+$route['guest-post']                       = 'layout/guest_post';
+$route['submit-post']                      = 'layout/save_post';
 $route['search']                           = 'layout/search';
 $route['search/(:num)']                    = 'layout/search/$1';
 $route['register']                         = 'layout/customer_register';

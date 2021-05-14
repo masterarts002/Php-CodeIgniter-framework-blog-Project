@@ -44,7 +44,7 @@ class Post extends CI_Controller
         $data['post_category']             = $this->input->post('post_category');
         $data['post_description']          = $this->input->post('post_description');
         $data['publication_status']        = $this->input->post('publication_status');
-        $data['post_author']               = $this->session->userdata('admin_id');
+        $data['post_author']               = $this->session->userdata('admin_name');
         $data['published_date']            = time();
 
         $this->form_validation->set_rules('post_title', 'post Title', 'trim|required');
@@ -131,8 +131,6 @@ class Post extends CI_Controller
         $data['post_category']             = $this->input->post('post_category');
         $data['post_description']          = $this->input->post('post_description');
         $data['publication_status']        = $this->input->post('publication_status');
-        $data['post_author']               = $this->session->userdata('admin_id');
-        $data['published_date']            = time();
 
         $this->form_validation->set_rules('post_title', 'post Title', 'trim|required');
         $this->form_validation->set_rules('post_data', 'Write Post', 'trim|required');

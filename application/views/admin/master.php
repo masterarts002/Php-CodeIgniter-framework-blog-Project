@@ -95,6 +95,7 @@
                     <div class="nav-collapse sidebar-nav" >
                         <ul class="nav nav-tabs nav-stacked main-menu">	
                             <li><a href="<?php echo base_url('dashboard')?>"><i class="icon-bar-chart"></i><span class="hidden-tablet"> Dashboard</span></a></li>
+                            <li><a href="<?php echo base_url('gallery')?>"><i class="icon-picture"></i><span class="hidden-tablet"> Gallery</span></a></li>
                             <li><a href="<?php echo base_url('contact-mail')?>"><i class="icon-envelope"></i><span class="hidden-tablet"> Contact Mail
                             <span class="badge badge-info"><?php $q=$this->db->select()->from('contact_table')->where('read_unread', FALSE)->get();
                              $get_new_contact_rows = $q->num_rows(); If($get_new_contact_rows) { echo $get_new_contact_rows;} ?></span></span></a></li>	
